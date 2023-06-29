@@ -1,0 +1,64 @@
+<template>
+  <li class="relative flex flex-col gap-2 border-t border-gray-200 px-4 py-10">
+    <TimelineHour
+      :hour="timelineItem.hour"
+      @click.prevent="emit('scrollToHour', timelineItem.hour)"
+    />
+
+    <BaseSelect
+      :options="activitySelectOptions"
+      :placeholder="'Rest'"
+      :selected="timelineItem.activityId"
+      @select="selectedActivity"
+    />
+
+    <TimelineStopwatch :seconds="timelineItem.activitySeconds" :hour="timelineItem.hour" />
+  </li>
+</template>
+
+<script setup>
+import BaseSelect from '@/components/BaseSelect.vue'
+import TimelineHour from '@/components/TimelineHour.vue'
+import TimelineStopwatch from '@/components/TimelineStopwatch.vue'
+
+import { NULLABLE_ACTIVITY } from '../constants'
+import {
+  isActivityValid,
+  isHourValid,
+  isTimelineItemValid,
+  validateActivities,
+  validateSelectOptions
+} from '../validators'
+
+const props = defineProps({
+  timelineItem: {
+    type: Object,
+    required: true,
+    validator: isTimelineItemValid
+  },
+  activities: {
+    type: Array,
+    required: true,
+    validator: validateActivities
+  },
+
+  activitySelectOptions: {
+    required: true,
+    type: Array,
+    validator: validateSelectOptions
+  }
+})
+
+const emit = defineEmits({
+  selectActivity: isActivityValid,
+  scrollToHour: isHourValid
+})
+
+function findActivityByid(id) {
+  return props.activities.find((activity) => activity.id === id) || NULLABLE_ACTIVITY
+}
+
+function selectedActivity(id) {
+  emit('selectActivity', findActivityByid(id))
+}
+</script>
