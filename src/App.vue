@@ -9,11 +9,13 @@
       :activities="activities"
       @set-timeline-item-activity="setTimelineItemActivity"
       :current-page="currentPage"
+      ref="timeline"
     ></TheTimeline>
     <TheProgress v-show="currentPage === PAGE_PROGRESS"></TheProgress>
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
+      :timeline-items="timelineItems"
       @delete-activity="deleteActivity"
       @create-activity="createActivity"
       @set-activity-seconds-to-complete="setActivitySecondsToComplete"
@@ -38,6 +40,8 @@ import TheProgress from './components/pages/TheProgress.vue'
 import TheTimeline from './components/pages/TheTimeline.vue'
 import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from './constants'
 
+const timeline = ref()
+
 const currentPage = ref(normalizePageHash())
 
 const activities = ref(generateActivities())
@@ -47,6 +51,13 @@ const timelineItems = ref(generateTimelineItems(activities.value))
 const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
 
 function goTo(page) {
+  if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
+    timeline.value.scrollToHour()
+  }
+
+  if (page !== PAGE_TIMELINE) {
+    document.body.scrollIntoView()
+  }
   currentPage.value = page
 }
 
