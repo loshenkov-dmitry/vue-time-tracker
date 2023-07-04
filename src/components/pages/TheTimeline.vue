@@ -10,6 +10,7 @@
         ref="timelineitemRefs"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
         @scroll-to-hour="scrollToHour"
+        @update-activity-seconds="emit('updateTimelineItemActivitySeconds', timelineItem, $event)"
       />
     </ul>
   </div>
@@ -21,6 +22,7 @@ import { nextTick, ref, watchPostEffect } from 'vue'
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from '../../constants'
 import {
   isActivityValid,
+  isNumber,
   isPageValid,
   isTimelineItemValid,
   validateActivities,
@@ -57,6 +59,9 @@ const props = defineProps({
 defineExpose({ scrollToHour })
 
 const emit = defineEmits({
+  updateTimelineItemActivitySeconds(timelineItem, seconds) {
+    return [isTimelineItemValid(timelineItem), isNumber(seconds)].every(Boolean)
+  },
   setTimelineItemActivity(timelineItem, activity) {
     return [isTimelineItemValid(timelineItem), isActivityValid(activity)].every(Boolean)
   }

@@ -8,6 +8,7 @@
       :activity-select-options="activitySelectOptions"
       :activities="activities"
       @set-timeline-item-activity="setTimelineItemActivity"
+      @update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
       :current-page="currentPage"
       ref="timeline"
     ></TheTimeline>
@@ -76,6 +77,10 @@ function createActivity(activity) {
 }
 function setTimelineItemActivity(timelineItem, activity) {
   timelineItem.activityId = activity.id
+}
+
+function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
+  timelineItem.activitySeconds += activitySeconds
 }
 
 function setActivitySecondsToComplete(activity, secondsToComplete) {
