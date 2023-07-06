@@ -8,7 +8,6 @@
       :activity-select-options="activitySelectOptions"
       :activities="activities"
       @set-timeline-item-activity="setTimelineItemActivity"
-      @update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
       :current-page="currentPage"
       ref="timeline"
     ></TheTimeline>
@@ -16,7 +15,6 @@
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
-      :timeline-items="timelineItems"
       @delete-activity="deleteActivity"
       @create-activity="createActivity"
       @set-activity-seconds-to-complete="setActivitySecondsToComplete"
@@ -35,7 +33,7 @@ import {
   generateTimelineItems,
   normalizePageHash
 } from '@/functions.js'
-import { computed, ref } from 'vue'
+import { computed, provide, ref } from 'vue'
 import TheActivities from './components/pages/TheActivities.vue'
 import TheProgress from './components/pages/TheProgress.vue'
 import TheTimeline from './components/pages/TheTimeline.vue'
@@ -86,4 +84,7 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 function setActivitySecondsToComplete(activity, secondsToComplete) {
   activity.secondsToComplete = secondsToComplete
 }
+
+provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
+provide('timelineItems', timelineItems.value)
 </script>
