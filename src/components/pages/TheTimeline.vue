@@ -4,9 +4,7 @@
       <TimelineItem
         v-for="timelineItem in timelineItems"
         :key="timelineItem.hour"
-        :activities="activities"
         :timeline-item="timelineItem"
-        :activity-select-options="activitySelectOptions"
         ref="timelineitemRefs"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
         @scroll-to-hour="scrollToHour"
@@ -23,8 +21,6 @@ import {
   isActivityValid,
   isPageValid,
   isTimelineItemValid,
-  validateActivities,
-  validateSelectOptions,
   validateTimelineItems
 } from '../../validators'
 
@@ -35,16 +31,6 @@ const props = defineProps({
     type: Array,
     required: true,
     validator: validateTimelineItems
-  },
-  activities: {
-    type: Array,
-    required: true,
-    validator: validateActivities
-  },
-  activitySelectOptions: {
-    type: Array,
-    required: true,
-    validator: validateSelectOptions
   },
 
   currentPage: {

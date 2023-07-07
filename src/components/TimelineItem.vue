@@ -21,33 +21,20 @@ import BaseSelect from '@/components/BaseSelect.vue'
 import TimelineHour from '@/components/TimelineHour.vue'
 import TimelineStopwatch from '@/components/TimelineStopwatch.vue'
 
+import { inject } from 'vue'
 import { NULLABLE_ACTIVITY } from '../constants'
-import {
-  isActivityValid,
-  isHourValid,
-  isTimelineItemValid,
-  validateActivities,
-  validateSelectOptions
-} from '../validators'
+import { isActivityValid, isHourValid, isTimelineItemValid } from '../validators'
 
-const props = defineProps({
+defineProps({
   timelineItem: {
     type: Object,
     required: true,
     validator: isTimelineItemValid
-  },
-  activities: {
-    type: Array,
-    required: true,
-    validator: validateActivities
-  },
-
-  activitySelectOptions: {
-    required: true,
-    type: Array,
-    validator: validateSelectOptions
   }
 })
+
+const activities = inject('activities')
+const activitySelectOptions = inject('activitySelectOptions')
 
 const emit = defineEmits({
   selectActivity: isActivityValid,
@@ -55,7 +42,7 @@ const emit = defineEmits({
 })
 
 function findActivityByid(id) {
-  return props.activities.find((activity) => activity.id === id) || NULLABLE_ACTIVITY
+  return activities.find((activity) => activity.id === id) || NULLABLE_ACTIVITY
 }
 
 function selectedActivity(id) {
