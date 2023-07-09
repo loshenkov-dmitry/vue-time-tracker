@@ -10,7 +10,7 @@
       <BaseSelect
         class="grow font-mono"
         placeholder="hh:mm"
-        :options="PERIOD_SELECT_OPTIONS"
+        :options="periodSelectOptions"
         :selected="activity.secondsToComplete || null"
         @select="emit('setSecondsToComplete', $event || 0)"
       />
@@ -26,8 +26,11 @@ import BaseButton from '@/components/BaseButton.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
 import { isActivityValid } from '@/validators.js'
 import { TrashIcon } from '@heroicons/vue/24/outline'
-import { BUTTON_TYPE_DANGER, PERIOD_SELECT_OPTIONS } from '../constants'
+import { inject } from 'vue'
+import { BUTTON_TYPE_DANGER } from '../constants'
 import { isNumber, isUndefined } from '../validators'
+
+const periodSelectOptions = inject('periodSelectOptions')
 
 defineProps({
   activity: {

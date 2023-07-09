@@ -5,7 +5,6 @@
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
-      @set-timeline-item-activity="setTimelineItemActivity"
       :current-page="currentPage"
       ref="timeline"
     ></TheTimeline>
@@ -36,6 +35,7 @@ import TheActivities from './components/pages/TheActivities.vue'
 import TheProgress from './components/pages/TheProgress.vue'
 import TheTimeline from './components/pages/TheTimeline.vue'
 import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from './constants'
+import { generatePeriodSelectOptions } from './functions'
 
 const timeline = ref()
 
@@ -71,8 +71,8 @@ function deleteActivity(activity) {
 function createActivity(activity) {
   activities.value.push(activity)
 }
-function setTimelineItemActivity(timelineItem, activity) {
-  timelineItem.activityId = activity.id
+function setTimelineItemActivity(timelineItem, activityId) {
+  timelineItem.activityId = activityId
 }
 
 function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
@@ -84,7 +84,8 @@ function setActivitySecondsToComplete(activity, secondsToComplete) {
 }
 
 provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
+provide('setTimelineItemActivity', setTimelineItemActivity)
 provide('timelineItems', timelineItems.value)
-provide('activities', activities.value)
+provide('periodSelectOptions', generatePeriodSelectOptions())
 provide('activitySelectOptions', activitySelectOptions.value)
 </script>
