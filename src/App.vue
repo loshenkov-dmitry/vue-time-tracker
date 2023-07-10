@@ -14,7 +14,6 @@
       :activities="activities"
       @delete-activity="deleteActivity"
       @create-activity="createActivity"
-      @set-activity-seconds-to-complete="setActivitySecondsToComplete"
     ></TheActivities>
   </main>
 
@@ -85,6 +84,7 @@ function setActivitySecondsToComplete(activity, secondsToComplete) {
 
 provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
 provide('setTimelineItemActivity', setTimelineItemActivity)
+provide('setActivitySecondsToComplete', setActivitySecondsToComplete)
 provide('timelineItems', timelineItems.value)
 provide('periodSelectOptions', generatePeriodSelectOptions())
 provide('activitySelectOptions', activitySelectOptions.value)
