@@ -3,6 +3,7 @@
 </template>
 
 <script setup>
+import { currentHour } from '../functions'
 import { isHourValid } from '../validators'
 
 const props = defineProps({
@@ -14,9 +15,7 @@ const props = defineProps({
 })
 
 const isActive =
-  props.hour === new Date().getHours()
-    ? 'bg-purple-900 font-black text-white'
-    : 'text-gray-500 bg-gray-100'
+  props.hour === currentHour() ? 'bg-purple-900 font-black text-white' : 'text-gray-500 bg-gray-100'
 
 const classes = [
   'absolute',

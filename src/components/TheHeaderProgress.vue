@@ -1,5 +1,5 @@
 <template>
-  <a :href="`#${PAGE_PROGRESS}`" class="text-sm">
+  <a :href="`#${PAGE_PROGRESS}`" class="text-sm" @click="navigate(PAGE_PROGRESS)">
     <div class="flex items-center gap-1" v-if="true">
       Day complete <CheckCircleIcon class="h-7 text-green-500" />
     </div>
@@ -14,4 +14,5 @@
 <script setup>
 import { CheckCircleIcon } from '@heroicons/vue/24/solid'
 import { PAGE_PROGRESS } from '../constants'
+import { navigate } from '../router'
 </script>

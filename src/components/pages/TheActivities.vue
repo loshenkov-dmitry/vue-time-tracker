@@ -1,17 +1,12 @@
 <template>
   <div class="flex grow flex-col">
     <ul v-if="activities.length" class="grow divide-y">
-      <ActivityItem
-        v-for="activity in activities"
-        :key="activity.id"
-        :activity="activity"
-        @delete="emit('deleteActivity', activity)"
-      />
+      <ActivityItem v-for="activity in activities" :key="activity.id" :activity="activity" />
     </ul>
 
     <TheActivitiesEmptyState v-else />
 
-    <TheActivityForm @submit="emit('createActivity', $event)" />
+    <TheActivityForm />
   </div>
 </template>
 
@@ -20,12 +15,6 @@ import ActivityItem from '@/components/ActivityItem.vue'
 import TheActivitiesEmptyState from '@/components/TheActivitiesEmptyState.vue'
 import TheActivityForm from '@/components/TheActivityForm.vue'
 import { validateActivities } from '@/validators.js'
-
-import { isActivityValid } from '../../validators'
-const emit = defineEmits({
-  deleteActivity: isActivityValid,
-  createActivity: isActivityValid
-})
 
 defineProps({
   activities: {
