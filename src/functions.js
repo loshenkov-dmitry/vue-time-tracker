@@ -1,15 +1,6 @@
 import { MILLISECONDS_IN_SECONDS, MINUTES_IN_HOUR, SECONDS_IN_MINUTE } from './constants'
 import { isNull } from './validators'
 
-export function getTotalActivitySeconds(activity, timelineItems) {
-  return timelineItems
-    .filter((timelineItem) => timelineItem.activityId === activity.id)
-    .reduce(
-      (totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds),
-      0
-    )
-}
-
 export function id() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
 }

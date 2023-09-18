@@ -15,13 +15,12 @@
 <script setup>
 import BaseButton from '@/components/BaseButton.vue'
 import { PlusIcon } from '@heroicons/vue/24/solid'
-import { inject, nextTick, ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { SECONDS_IN_HOUR } from '../constants'
 import { id } from '../functions'
-import { createActivityKey } from '@/keys'
+import { createActivity } from '../activities'
 
 const name = ref('')
-const createActivity = inject(createActivityKey)
 
 async function formHandler() {
   createActivity({
