@@ -7,18 +7,19 @@
       v-model="name"
     />
     <BaseButton :disabled="name.trim() === ''">
-      <PlusIcon class="h-8" />
+      <BaseIcon :name="ICON_PLUS" />
     </BaseButton>
   </form>
 </template>
 
 <script setup>
 import BaseButton from '@/components/BaseButton.vue'
-import { PlusIcon } from '@heroicons/vue/24/solid'
 import { nextTick, ref } from 'vue'
 import { SECONDS_IN_HOUR } from '../constants'
 import { id } from '../functions'
 import { createActivity } from '../activities'
+import BaseIcon from './BaseIcon.vue'
+import { ICON_PLUS } from '../icons'
 
 const name = ref('')
 

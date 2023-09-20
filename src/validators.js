@@ -1,4 +1,5 @@
 import { BUTTON_TYPES, HOURS_IN_DAY, MIDNIGHT_HOUR, NAV_ITEMS } from './constants'
+import { ICONS } from './icons'
 
 export function isPageValid(currentPage) {
   return NAV_ITEMS.some((navItem) => navItem.page === currentPage)
@@ -70,4 +71,8 @@ export function isSelectValueValid(value) {
 }
 export function isNavItemValid(navItem) {
   return NAV_ITEMS.includes(navItem)
+}
+
+export function isIconValid(icon) {
+  return Object.keys(ICONS).includes(icon)
 }
