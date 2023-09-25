@@ -1,7 +1,7 @@
 <template>
   <a :href="`#${PAGE_PROGRESS}`" class="text-sm" @click="navigate(PAGE_PROGRESS)">
     <div class="flex items-center gap-1" v-if="true">
-      Day complete <BaseIcon :name="ICON_CHECK_CIRCLE" classes="h-7 text-green-500" />
+      Day complete <BaseIcon :name="ICON_CHECK_CIRCLE" class="h-7 text-green-500" />
     </div>
 
     <div class="flex items-center gap-1" v-else>

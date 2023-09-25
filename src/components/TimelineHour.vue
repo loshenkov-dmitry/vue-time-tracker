@@ -1,9 +1,10 @@
 <template>
-  <a href="#" :class="classes">{{ formattedHour }}</a>
+  <a href="#" :class="classes" @click.prevent="scrollToHour(hour)">{{ formattedHour }}</a>
 </template>
 
 <script setup>
 import { currentHour } from '../functions'
+import { scrollToHour } from '../timeline-items'
 import { isHourValid } from '../validators'
 
 const props = defineProps({

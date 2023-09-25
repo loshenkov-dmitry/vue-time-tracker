@@ -1,5 +1,4 @@
 import { ref } from 'vue'
-import { activities } from './activities'
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from './constants'
 import { currentHour } from './functions'
 
@@ -45,8 +44,8 @@ export function scrollToCurrentHour(isSmooth = false) {
 function generateTimelineItems() {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
     hour,
-    activityId: [0, 1, 2, 3, 4].includes(hour) ? activities.value[hour % 3].id : null,
-    activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0
+    activityId: null,
+    activitySeconds: 0
   }))
 }
 
