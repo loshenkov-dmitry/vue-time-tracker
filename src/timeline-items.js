@@ -10,21 +10,16 @@ export function updateTimelineItem(timelineItem, fields) {
   return Object.assign(timelineItem, fields)
 }
 
-export function resetTimelineItemActivities(activity) {
-  timelineItems.value
-    .filter((timelineItem) => hasActivity(timelineItem, activity))
-    .forEach((timelineItem) =>
-      updateTimelineItem(timelineItem, { activityId: null, activitySeconds: 0 })
-    )
+export function resetTimelineItemActivities(timelineItems, activity) {
+  filterTimelineItemsByActivity(timelineItems, activity).forEach((timelineItem) =>
+    updateTimelineItem(timelineItem, { activityId: null, activitySeconds: 0 })
+  )
 }
 
-export function getTotalActivitySeconds(activity) {
-  return timelineItems.value
-    .filter((timelineItem) => hasActivity(timelineItem, activity))
-    .reduce(
-      (totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds),
-      0
-    )
+export function calculateTrackedActivitySeconds(timelineItems, activity) {
+  return filterTimelineItemsByActivity(timelineItems, activity)
+    .map(({ activitySeconds }) => activitySeconds)
+    .reduce((seconds, total) => Math.round(seconds + total), 0)
 }
 
 export function scrollToHour(hour, isSmooth = true) {
@@ -49,6 +44,6 @@ function generateTimelineItems() {
   }))
 }
 
-function hasActivity(timelineItem, activity) {
-  return timelineItem.activityId === activity.id
+function filterTimelineItemsByActivity(timelineItems, { id }) {
+  return timelineItems.filter(({ activityId }) => activityId === id)
 }
