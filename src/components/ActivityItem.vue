@@ -15,15 +15,15 @@
         @select="updateActivity(activity, { secondsToComplete: $event || 0 })"
       />
 
-      <ActivitySecondsToComplete :activity="activity" v-if="activity.secondsToComplete" />
+      <RemainingActivitySeconds :activity="activity" v-if="activity.secondsToComplete" />
     </div>
   </li>
 </template>
 
 <script setup>
-import ActivitySecondsToComplete from '@/components/ActivitySecondsToComplete.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
+import RemainingActivitySeconds from '@/components/RemainingActivitySeconds.vue'
 import BaseIcon from './BaseIcon.vue'
 import { isActivityValid } from '@/validators.js'
 import { ICON_TRASH } from '../icons'
