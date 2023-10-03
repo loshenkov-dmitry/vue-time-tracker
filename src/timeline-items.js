@@ -12,7 +12,10 @@ export function updateTimelineItem(timelineItem, fields) {
 
 export function resetTimelineItemActivities(timelineItems, activity) {
   filterTimelineItemsByActivity(timelineItems, activity).forEach((timelineItem) =>
-    updateTimelineItem(timelineItem, { activityId: null, activitySeconds: 0 })
+    updateTimelineItem(timelineItem, {
+      activityId: null,
+      activitySeconds: timelineItem.hour === currentHour() ? timelineItem.activitySeconds : 0
+    })
   )
 }
 

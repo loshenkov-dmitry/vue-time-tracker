@@ -1,10 +1,10 @@
 <template>
   <div class="flex w-full gap-2">
-    <BaseButton :disabled="!seconds" :type="BUTTON_TYPE_DANGER" @click="reset">
+    <BaseButton :disabled="!timelineItem.activitySeconds" :type="BUTTON_TYPE_DANGER" @click="reset">
       <BaseIcon :name="ICON_ARROW_PATH" />
     </BaseButton>
     <div class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono text-3xl">
-      {{ formatSeconds(seconds) }}
+      {{ formatSeconds(timelineItem.activitySeconds) }}
     </div>
     <BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop">
       <BaseIcon :name="ICON_PAUSE" />
@@ -18,18 +18,14 @@
 <script setup>
 import BaseButton from '@/components/BaseButton.vue'
 import { formatSeconds } from '@/functions.js'
-import { ref, watch } from 'vue'
+import { useStopwatch } from '@/composables/stopwatch'
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '../icons'
-import {
-  BUTTON_TYPE_DANGER,
-  BUTTON_TYPE_SUCCESS,
-  BUTTON_TYPE_WARNING,
-  MILLISECONDS_IN_SECONDS
-} from '../constants'
+import { BUTTON_TYPE_DANGER, BUTTON_TYPE_SUCCESS, BUTTON_TYPE_WARNING } from '../constants'
 import { isTimelineItemValid } from '../validators'
 import { currentHour } from '../functions'
-import { updateTimelineItem } from '../timeline-items'
 import BaseIcon from './BaseIcon.vue'
+import { updateTimelineItem } from '../timeline-items'
+import { watchEffect } from 'vue'
 
 const props = defineProps({
   timelineItem: {
@@ -39,37 +35,9 @@ const props = defineProps({
   }
 })
 
-const seconds = ref(props.timelineItem.activitySeconds)
-const isRunning = ref(false)
-const temp = 120
+const { seconds, isRunning, start, stop, reset } = useStopwatch(props.timelineItem.activitySeconds)
 
-watch(
-  () => props.timelineItem.activityId,
-  () => {
-    updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value })
-  }
-)
-
-function start() {
-  isRunning.value = setInterval(() => {
-    updateTimelineItem(props.timelineItem, {
-      activitySeconds: props.timelineItem.activitySeconds + temp
-    })
-    seconds.value += temp
-  }, MILLISECONDS_IN_SECONDS)
-}
-function stop() {
-  clearInterval(isRunning.value)
-  isRunning.value = false
-}
-
-function reset() {
-  stop()
-  updateTimelineItem(props.timelineItem, {
-    activitySeconds: props.timelineItem.activitySeconds - seconds.value
-  })
-  seconds.value = 0
-}
+watchEffect(() => updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value }))
 
 const isStartButtonDisabled = props.timelineItem.hour !== currentHour()
 </script>

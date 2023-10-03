@@ -27,6 +27,15 @@ export function calculateActivityComplitionPercentage({ secondsToComplete }, tra
 
   return percentage
 }
+export function calculateComplitionPercentage(totalTrackedSeconds) {
+  return Math.floor((totalTrackedSeconds * HUNDRED_PERCENT) / totalActivitySecondsToComplete.value)
+}
+
+const totalActivitySecondsToComplete = computed(() => {
+  return trackedActivities.value
+    .map(({ secondsToComplete }) => secondsToComplete)
+    .reduce((total, seconds) => total + seconds, 0)
+})
 
 function generateActivities() {
   return ['Coding', 'Training', 'Reading'].map((name) => ({
